@@ -16,13 +16,16 @@ import { MaskModal } from './components/MaskModal';
 import { AnimationModal } from './components/AnimationModal';
 import { CanvasModal } from './components/CanvasModal';
 import { StickersModal } from './components/StickersModal';
+import { TransitionsModal } from './components/TransitionsModal';
+import { ScriptingModal } from './components/ScriptingModal';
 import type { 
   ProjectState, 
   MediaClip, 
   AspectRatio, 
   FilterSettings, 
   TextStyleSettings,
-  MaskType
+  MaskType,
+  TransitionType
 } from './types/editor';
 import { createDefaultTracks } from './utils/sampleMedia';
 
@@ -60,6 +63,8 @@ export const App: React.FC = () => {
   const [isAnimationModalOpen, setIsAnimationModalOpen] = useState(false);
   const [isCanvasModalOpen, setIsCanvasModalOpen] = useState(false);
   const [isStickersModalOpen, setIsStickersModalOpen] = useState(false);
+  const [isTransitionsModalOpen, setIsTransitionsModalOpen] = useState(false);
+  const [isScriptingModalOpen, setIsScriptingModalOpen] = useState(false);
 
   const [activeProFeatureName, setActiveProFeatureName] = useState<string>('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -747,6 +752,121 @@ export const App: React.FC = () => {
     showToast('🎬 Novo clipe adicionado à timeline!');
   };
 
+  // Apply Transition
+  const handleApplyTransition = (type: TransitionType, duration: number, applyToAll: boolean = false) => {
+    if (applyToAll) {
+      const updatedTracks = project.tracks.map((track) => ({
+        ...track,
+        clips: track.clips.map((c) =>
+          c.type === 'video'
+            ? { ...c, transition: { type, duration } }
+            : c
+        ),
+      }));
+      pushState({ ...project, tracks: updatedTracks });
+      showToast(`✨ Transição ${type} aplicada a todos os clipes!`);
+    } else if (selectedClip) {
+      handleUpdateClip({
+        ...selectedClip,
+        transition: { type, duration },
+      });
+      showToast(`✨ Transição ${type} aplicada com sucesso!`);
+    }
+  };
+
+  // OpenCut Scripting Preset Execution
+  const handleApplyPresetScript = (presetId: string) => {
+    if (presetId === 'tiktok_viral') {
+      const updatedTracks = project.tracks.map((t) => ({
+        ...t,
+        clips: t.clips.map((c) => ({
+          ...c,
+          transform: { ...c.transform, scale: 1.05 },
+          filters: { ...c.filters, contrast: 110, saturation: 115 },
+          pro: { ...c.pro, aiUpscaling: true },
+        })),
+      }));
+      pushState({ ...project, aspectRatio: '9:16', tracks: updatedTracks });
+      handleAddSticker('❤️ DEIXE O LIKE');
+      showToast('📱 Otimizador Viral TikTok aplicado!');
+    } else if (presetId === 'cinematic_teal_orange') {
+      const updatedTracks = project.tracks.map((t) => ({
+        ...t,
+        clips: t.clips.map((c) => ({
+          ...c,
+          mask: 'film' as MaskType,
+          filters: { ...c.filters, temperature: -12, saturation: 125, contrast: 118 },
+        })),
+      }));
+      pushState({ ...project, tracks: updatedTracks });
+      showToast('🎬 Look Cinematic Teal & Orange aplicado!');
+    } else if (presetId === 'podcast_audio_clean') {
+      const updatedTracks = project.tracks.map((t) => ({
+        ...t,
+        clips: t.clips.map((c) => ({
+          ...c,
+          volume: Math.min(2.0, c.volume * 1.5),
+          pro: { ...c.pro, vocalIsolation: true, noiseReduction: true },
+        })),
+      }));
+      pushState({ ...project, tracks: updatedTracks });
+      showToast('🎙️ Isolamento Vocal e Denoise aplicados!');
+    } else if (presetId === 'auto_jump_cut') {
+      handleSplitClip();
+      showToast('⚡ Corte dinâmico de ritmo executado!');
+    } else if (presetId === 'add_cta_stickers') {
+      handleAddSticker('👍 INSCREVA-SE');
+      showToast('🔔 Figurinhas de CTA adicionadas!');
+    }
+  };
+
+  // OpenCut Custom Code Execution via Editor API
+  const handleExecuteScript = (code: string) => {
+    try {
+      const editorApi = {
+        getClips: () => project.tracks.flatMap((t) => t.clips),
+        getProject: () => project,
+        splitAt: (time: number) => {
+          setProject((prev) => ({ ...prev, currentTime: time }));
+          handleSplitClip();
+        },
+        addText: (text: string) => {
+          handleAddSticker(text);
+        },
+        setFilter: (clipId: string, filterUpdates: Partial<FilterSettings>) => {
+          const clip = project.tracks.flatMap((t) => t.clips).find((c) => c.id === clipId);
+          if (clip) {
+            handleUpdateClip({
+              ...clip,
+              filters: { ...clip.filters, ...filterUpdates },
+            });
+          }
+        },
+        notify: (msg: string) => showToast(msg),
+        setAspect: (ratio: AspectRatio) => setProject((prev) => ({ ...prev, aspectRatio: ratio })),
+      };
+
+      const fn = new Function('editor', code);
+      fn(editorApi);
+      return { success: true, message: 'Script executado com sucesso.' };
+    } catch (e: any) {
+      return { success: false, message: e.message || String(e) };
+    }
+  };
+
+  // Expose Editor API globally to window for devtools / agents
+  useEffect(() => {
+    (window as any).editor = {
+      getProject: () => project,
+      getClips: () => project.tracks.flatMap((t) => t.clips),
+      seek: (t: number) => setProject((p) => ({ ...p, currentTime: t })),
+      play: () => setProject((p) => ({ ...p, isPlaying: true })),
+      pause: () => setProject((p) => ({ ...p, isPlaying: false })),
+      split: handleSplitClip,
+      notify: showToast,
+    };
+  }, [project]);
+
   return (
     <div className="capcut-app-root">
       {/* Toast Notification */}
@@ -784,6 +904,7 @@ export const App: React.FC = () => {
             onRedo={handleRedo}
             canUndo={historyIndex > 0}
             canRedo={historyIndex < history.length - 1}
+            onAddClip={handleAddClipFromDrawer}
           />
         </section>
 
@@ -796,6 +917,7 @@ export const App: React.FC = () => {
             onUpdateClip={handleUpdateClip}
             onOpenMediaDrawer={() => setIsMediaDrawerOpen(true)}
             onAddTextClip={handleAddTextClip}
+            onOpenTransitions={() => setIsTransitionsModalOpen(true)}
           />
         </section>
 
@@ -826,6 +948,8 @@ export const App: React.FC = () => {
             onAddTextClip={handleAddTextClip}
             onOpenMediaDrawer={() => setIsMediaDrawerOpen(true)}
             onToggleFreeze={handleToggleFreeze}
+            onOpenTransitionsModal={() => setIsTransitionsModalOpen(true)}
+            onOpenScriptingModal={() => setIsScriptingModalOpen(true)}
           />
         </section>
       </main>
@@ -976,6 +1100,21 @@ export const App: React.FC = () => {
         isOpen={isMediaDrawerOpen}
         onClose={() => setIsMediaDrawerOpen(false)}
         onAddClip={handleAddClipFromDrawer}
+      />
+
+      <TransitionsModal
+        clip={selectedClip}
+        isOpen={isTransitionsModalOpen}
+        onClose={() => setIsTransitionsModalOpen(false)}
+        onApplyTransition={handleApplyTransition}
+      />
+
+      <ScriptingModal
+        isOpen={isScriptingModalOpen}
+        onClose={() => setIsScriptingModalOpen(false)}
+        project={project}
+        onExecuteScript={handleExecuteScript}
+        onApplyPresetScript={handleApplyPresetScript}
       />
     </div>
   );

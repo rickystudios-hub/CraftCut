@@ -50,6 +50,17 @@ export interface ProSettings {
 }
 
 export type MaskType = 'none' | 'split' | 'film' | 'circle' | 'rectangle' | 'heart' | 'star';
+export type TransitionType = 'none' | 'dissolve' | 'wipe-left' | 'wipe-right' | 'zoom' | 'dip-black' | 'glitch';
+export type BlendMode = 'normal' | 'multiply' | 'screen' | 'overlay' | 'lighten';
+
+export interface Keyframe {
+  time: number; // relative to clip start in seconds
+  scale?: number;
+  rotation?: number;
+  x?: number;
+  y?: number;
+  opacity?: number;
+}
 
 export interface MediaClip {
   id: string;
@@ -68,6 +79,13 @@ export interface MediaClip {
   pro: ProSettings;
   mask: MaskType;
   animation: 'none' | 'fade' | 'zoom' | 'slide' | 'glitch';
+  transition?: {
+    type: TransitionType;
+    duration: number;
+  };
+  blendMode?: BlendMode;
+  keyframes?: Keyframe[];
+  waveform?: number[];
   textSettings?: TextStyleSettings;
   thumbnailUrl?: string;
   color?: string;      // Color badge for timeline

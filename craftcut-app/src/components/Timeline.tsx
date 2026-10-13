@@ -6,7 +6,9 @@ import {
   Plus, 
   Music, 
   Type, 
-  Film
+  Film,
+  Shuffle,
+  Layers
 } from 'lucide-react';
 import type { ProjectState, MediaClip } from '../types/editor';
 
@@ -17,6 +19,7 @@ interface TimelineProps {
   onUpdateClip: (clip: MediaClip) => void;
   onOpenMediaDrawer: () => void;
   onAddTextClip: () => void;
+  onOpenTransitions?: () => void;
 }
 
 export const Timeline: React.FC<TimelineProps> = ({
@@ -26,6 +29,7 @@ export const Timeline: React.FC<TimelineProps> = ({
   onUpdateClip,
   onOpenMediaDrawer,
   onAddTextClip,
+  onOpenTransitions,
 }) => {
   const rulerRef = useRef<HTMLDivElement | null>(null);
   const lanesContainerRef = useRef<HTMLDivElement | null>(null);
@@ -213,12 +217,50 @@ export const Timeline: React.FC<TimelineProps> = ({
                         </div>
                       )}
 
+                      {/* Transition Pill Badge */}
+                      {clip.transition && clip.transition.type !== 'none' && (
+                        <button
+                          className="capcut-transition-pill"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onOpenTransitions?.();
+                          }}
+                          style={{
+                            position: 'absolute',
+                            left: '-12px',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            zIndex: 15,
+                            background: '#161920',
+                            border: '1.5px solid #00f2fe',
+                            borderRadius: '6px',
+                            color: '#00f2fe',
+                            padding: '3px 4px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '2px',
+                            cursor: 'pointer',
+                            fontSize: '9px',
+                            fontWeight: 'bold',
+                            boxShadow: '0 2px 6px rgba(0,0,0,0.5)'
+                          }}
+                          title={`Transição: ${clip.transition.type}`}
+                        >
+                          <Shuffle size={10} />
+                        </button>
+                      )}
+
                       {/* Filmstrip Thumbnails Content */}
                       <div className="video-clip-content">
                         <div className="clip-name-badge">
                           <Film size={12} />
                           <span>{clip.name}</span>
                           {clip.pro.smoothSlowMotion && <span className="pro-tag">PRO</span>}
+                          {clip.transition && clip.transition.type !== 'none' && (
+                            <span style={{ fontSize: '0.62rem', background: '#00f2fe', color: '#000', padding: '1px 4px', borderRadius: '3px', fontWeight: 'bold', marginLeft: '4px' }}>
+                              {clip.transition.type.toUpperCase()}
+                            </span>
+                          )}
                         </div>
                         <div className="clip-time-badge">{clip.duration.toFixed(1)}s</div>
                       </div>
@@ -257,6 +299,44 @@ export const Timeline: React.FC<TimelineProps> = ({
                 >
                   <Plus size={18} />
                 </button>
+              </div>
+            ))}
+
+          {/* Overlay / PIP Tracks */}
+          {project.tracks
+            .filter((t) => t.type === 'overlay')
+            .map((track) => (
+              <div key={track.id} className="capcut-track capcut-track-overlay">
+                {track.clips.map((clip) => {
+                  const isSelected = project.selectedClipId === clip.id;
+                  const clipLeft = clip.start * zoom;
+                  const clipWidth = Math.max(35, clip.duration * zoom);
+
+                  return (
+                    <div
+                      key={clip.id}
+                      className={`capcut-clip-video capcut-clip-overlay ${isSelected ? 'selected' : ''}`}
+                      style={{
+                        left: `${clipLeft}px`,
+                        width: `${clipWidth}px`,
+                        borderColor: '#00f2fe',
+                        background: 'linear-gradient(135deg, #092c3e, #134e6f)',
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSelectClip(clip.id);
+                      }}
+                    >
+                      <div className="video-clip-content">
+                        <div className="clip-name-badge">
+                          <Layers size={12} color="#00f2fe" />
+                          <span>{clip.name} (PIP)</span>
+                        </div>
+                        <div className="clip-time-badge">{clip.duration.toFixed(1)}s</div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             ))}
 
@@ -331,11 +411,23 @@ export const Timeline: React.FC<TimelineProps> = ({
                       <div className="audio-clip-inner">
                         <Music size={12} className="music-icon" />
                         <span className="audio-title">{clip.name}</span>
-                        <div className="audio-mini-wave">
-                          <span className="bar" />
-                          <span className="bar" />
-                          <span className="bar" />
-                          <span className="bar" />
+                        <div className="audio-mini-wave" style={{ display: 'flex', gap: '2px', alignItems: 'center', height: '18px', flex: 1, padding: '0 8px', overflow: 'hidden' }}>
+                          {Array.from({ length: 24 }).map((_, i) => {
+                            const h = 25 + Math.sin(i * 0.9 + clip.duration) * 35 + ((i % 4) * 10);
+                            return (
+                              <span
+                                key={i}
+                                className="bar"
+                                style={{
+                                  width: '2px',
+                                  height: `${Math.max(15, Math.min(100, h))}%`,
+                                  backgroundColor: '#34d399',
+                                  borderRadius: '1px',
+                                  flexShrink: 0
+                                }}
+                              />
+                            );
+                          })}
                         </div>
                       </div>
                     </div>

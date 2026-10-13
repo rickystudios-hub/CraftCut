@@ -22,7 +22,9 @@ import {
   Snowflake,
   Activity,
   Palette,
-  Crop
+  Crop,
+  Terminal,
+  Shuffle
 } from 'lucide-react';
 import type { MediaClip } from '../types/editor';
 
@@ -48,6 +50,8 @@ interface ToolbarProps {
   onAddTextClip: () => void;
   onOpenMediaDrawer: () => void;
   onToggleFreeze: () => void;
+  onOpenTransitionsModal: () => void;
+  onOpenScriptingModal: () => void;
 }
 
 export const Toolbar: React.FC<ToolbarProps> = ({
@@ -72,6 +76,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   onAddTextClip,
   onOpenMediaDrawer,
   onToggleFreeze,
+  onOpenTransitionsModal,
+  onOpenScriptingModal,
 }) => {
   // If clip is selected, render CapCut's Edit Sub-Menu
   if (selectedClip) {
@@ -112,6 +118,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           <div className="pro-corner-badge">PRO</div>
           <Sparkles size={20} className="icon-gold" />
           <span>Animação</span>
+        </button>
+
+        {/* Transições */}
+        <button className="capcut-bar-item" onClick={onOpenTransitionsModal} title="Transições entre clipes">
+          <Shuffle size={20} className="icon-cyan" />
+          <span>Transições</span>
         </button>
 
         {/* Remover Fundo IA PRO */}
@@ -274,6 +286,13 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       <button className="capcut-bar-item" onClick={onOpenCanvasModal}>
         <Ratio size={22} />
         <span>Proporção</span>
+      </button>
+
+      {/* OpenCut Scripting & Automation API */}
+      <button className="capcut-bar-item pro-item" onClick={onOpenScriptingModal} title="OpenCut Scripting & Editor API Console">
+        <div className="pro-corner-badge" style={{ background: 'linear-gradient(135deg, #00f2fe, #4facfe)', color: '#000' }}>API</div>
+        <Terminal size={22} className="icon-cyan" />
+        <span>Scripting</span>
       </button>
     </div>
   );

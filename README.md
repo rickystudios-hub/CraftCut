@@ -21,6 +21,7 @@
   <img alt="PRO Unlocked" src="https://img.shields.io/badge/PRO%20Features-100%25%20Free%20%26%20Unlocked-facc15?style=flat-square&logo=starship&logoColor=black">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-React%2019-3178c6?style=flat-square&logo=typescript&logoColor=white">
   <img alt="Runs on Web & Android" src="https://img.shields.io/badge/runs%20on-Web%20%7C%20Android%20%7C%20PWA-10b981?style=flat-square&logo=android&logoColor=white">
+  <img alt="OpenCut Architecture" src="https://img.shields.io/badge/OpenCut-Scripting%20%26%20Editor%20API-8b5cf6?style=flat-square&logo=javascript&logoColor=white">
   <a href="#architecture"><img alt="Clean-room Reimplementation" src="https://img.shields.io/badge/clean--room-reimplementation-6366f1?style=flat-square"></a>
 </p>
 
@@ -29,6 +30,8 @@
   <a href="#cutout-and-ai"><b>Cutout & AI</b></a> ·
   <a href="#audio-studio"><b>Audio Studio</b></a> ·
   <a href="#effects-and-motion"><b>Effects & Motion</b></a> ·
+  <a href="#transitions"><b>Transitions</b></a> ·
+  <a href="#opencut-scripting--api"><b>OpenCut Scripting API</b></a> ·
   <a href="#titles-and-captions"><b>Captions</b></a> ·
   <a href="#masks-and-canvas"><b>Masks & Canvas</b></a> ·
   <a href="#export-and-codecs"><b>Export</b></a> ·
@@ -136,6 +139,47 @@ Real-time canvas shaders and procedural video motion:
   - 3D Combo: *Giro 3D*, *Pêndulo Dinâmico*, and *Batida Rítmica*.
 - **Smooth Slow Motion (Optical Flow 60 FPS):** Speed adjustments from 0.1× up to 100× with frame interpolation for ultra-smooth slow motion.
 - **Optical Stabilization:** Gyroscopic shake compensation eliminating jitter from mobile handheld footage.
+
+<br>
+
+---
+
+## Transitions
+
+Fluid cinematic scene transitions between adjacent video clips:
+
+- **Transition Library:**
+  - `Dissolve (Dissolvência Cruzada)`: Smooth linear alpha blending.
+  - `Dip to Black (Fade para Preto)`: Traditional film scene blackout.
+  - `Wipe Left / Wipe Right (Varredura)`: Dynamic directional slide reveal.
+  - `Zoom Wipe`: Accelerated focal zoom with motion blur.
+  - `Glitch Transition`: High-energy digital RGB chromatic flash.
+- **Interactive Timeline Pills:** Configurable directly on the timeline with duration slider (0.2s to 2.0s) and 1-tap *Aplicar a Todos*.
+
+<br>
+
+---
+
+## OpenCut Scripting & API
+
+Directly inspired by **[OpenCut](https://github.com/OpenCut-app/OpenCut)**'s plugin-first architecture, CraftCut features a complete **Editor API & Scripting Console** that empowers creators and AI agents to automate video editing workflows with pure JavaScript:
+
+```javascript
+// Example OpenCut Script: Enhance contrast and add TikTok captions
+const clips = editor.getClips();
+clips.forEach(clip => {
+  editor.setFilter(clip.id, { contrast: 115, saturation: 120 });
+});
+
+editor.addText("🔥 DICA VIRAL #1");
+editor.notify("Vídeo otimizado com sucesso!");
+```
+
+### Pre-packaged 1-Click Automations:
+- 📱 **Otimizador Viral TikTok/Reels:** Automatic 9:16 re-frame, punchy scale, 4K HDR boost, and engagement stickers.
+- 🎬 **Cinematic Teal & Orange:** Hollywood film mask (2.35:1) with cool teal shadows and warm orange skin tones.
+- 🎙️ **Podcast Audio Clean:** 1-click batch activation of Vocal Isolation + AI Denoise across all audio tracks.
+- ⚡ **Dynamic Beat Cut:** Intelligent jump-cuts at 1.5s intervals to boost audience retention.
 
 <br>
 
