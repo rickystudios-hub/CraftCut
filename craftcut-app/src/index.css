@@ -1,0 +1,1205 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:root {
+  --capcut-black: #000000;
+  --capcut-bg-dark: #0a0a0c;
+  --capcut-surface: #121215;
+  --capcut-surface-hover: #1c1c21;
+  --capcut-border: #222228;
+  --capcut-border-light: #32323c;
+  
+  --capcut-white: #ffffff;
+  --capcut-gray-100: #e4e4e7;
+  --capcut-gray-300: #a1a1aa;
+  --capcut-gray-500: #71717a;
+  --capcut-gray-700: #3f3f46;
+
+  --capcut-cyan: #22d3ee;
+  --capcut-blue: #2563eb;
+  --capcut-gold: #ffd700;
+  --capcut-gold-glow: rgba(255, 215, 0, 0.45);
+  --capcut-pink: #f43f5e;
+  --capcut-green: #10b981;
+  --capcut-purple: #8b5cf6;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--capcut-black);
+  color: var(--capcut-white);
+  font-family: var(--font-sans);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* App Container */
+.capcut-app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--capcut-black);
+  position: relative;
+}
+
+/* Floating Toast */
+.capcut-toast {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(24, 24, 28, 0.96);
+  border: 1px solid rgba(255, 215, 0, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 15px var(--capcut-gold-glow);
+  padding: 8px 18px;
+  border-radius: 30px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: fadeInDown 0.25s ease-out;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translate(-50%, -10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ===================================================
+   1. CAPCUT TOP HEADER BAR
+   =================================================== */
+.capcut-header {
+  height: 52px;
+  background-color: var(--capcut-black);
+  border-bottom: 1px solid var(--capcut-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  z-index: 50;
+}
+
+.capcut-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.capcut-icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--capcut-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+
+.capcut-icon-btn:hover {
+  background: var(--capcut-surface-hover);
+}
+
+.capcut-title-container {
+  display: flex;
+  align-items: center;
+}
+
+.capcut-project-name {
+  background: transparent;
+  border: none;
+  color: var(--capcut-gray-300);
+  font-size: 0.9rem;
+  font-weight: 600;
+  outline: none;
+  width: 140px;
+}
+
+.capcut-project-name:focus {
+  color: var(--capcut-white);
+}
+
+/* Header Center: PRO Pill & Resolution */
+.capcut-header-center {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* PRO UNLOCKED PILL */
+.capcut-pro-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #2b1f02, #4a3805);
+  border: 1px solid rgba(255, 215, 0, 0.6);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.25);
+  padding: 4px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.capcut-pro-pill:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 18px rgba(255, 215, 0, 0.45);
+}
+
+.crown-icon {
+  color: var(--capcut-gold);
+}
+
+.pro-pill-text {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #fff;
+}
+
+.pro-free-badge {
+  background: var(--capcut-gold);
+  color: #000;
+  font-size: 0.6rem;
+  font-weight: 900;
+  padding: 1px 5px;
+  border-radius: 10px;
+}
+
+/* Resolution Pill */
+.res-pill-wrapper {
+  position: relative;
+}
+
+.capcut-res-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--capcut-surface);
+  border: 1px solid var(--capcut-border);
+  color: var(--capcut-white);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.capcut-res-pill:hover {
+  background: var(--capcut-surface-hover);
+}
+
+.res-dropdown-menu {
+  position: absolute;
+  top: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--capcut-surface);
+  border: 1px solid var(--capcut-border-light);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  padding: 12px;
+  width: 210px;
+  z-index: 100;
+}
+
+.res-dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--capcut-white);
+}
+
+.pro-tag-sm {
+  background: var(--capcut-gold);
+  color: #000;
+  font-size: 0.6rem;
+  font-weight: 900;
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.res-section-title {
+  font-size: 0.68rem;
+  color: var(--capcut-gray-500);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.res-buttons-row {
+  display: flex;
+  gap: 4px;
+}
+
+.res-btn {
+  flex: 1;
+  background: var(--capcut-surface-hover);
+  border: 1px solid var(--capcut-border);
+  color: var(--capcut-gray-300);
+  padding: 5px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.res-btn.active {
+  background: var(--capcut-blue);
+  color: #fff;
+  border-color: var(--capcut-blue);
+}
+
+/* Header Right: Aspect quick tab & Export */
+.capcut-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.aspect-quick-pill {
+  display: flex;
+  background: var(--capcut-surface);
+  border: 1px solid var(--capcut-border);
+  border-radius: 16px;
+  padding: 2px;
+}
+
+.aspect-tab {
+  background: transparent;
+  border: none;
+  color: var(--capcut-gray-500);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.aspect-tab.active {
+  background: var(--capcut-surface-hover);
+  color: var(--capcut-cyan);
+}
+
+.capcut-export-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--capcut-blue);
+  color: #fff;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.4);
+}
+
+.capcut-export-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* ===================================================
+   2. MAIN WORKSPACE & PREVIEW PLAYER
+   =================================================== */
+.capcut-workspace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--capcut-black);
+}
+
+.capcut-stage-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--capcut-black);
+  position: relative;
+  overflow: hidden;
+}
+
+.capcut-player-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.capcut-stage-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.capcut-canvas-box {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+  max-height: 44vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aspect-9-16 { aspect-ratio: 9 / 16; }
+.aspect-16-9 { aspect-ratio: 16 / 9; }
+.aspect-1-1  { aspect-ratio: 1 / 1; }
+.aspect-4-5  { aspect-ratio: 4 / 5; }
+
+.capcut-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Playback Sub-bar directly below canvas */
+.capcut-playback-bar {
+  width: 100%;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  background: var(--capcut-black);
+}
+
+.capcut-timecode {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  gap: 4px;
+}
+
+.capcut-timecode .current { color: var(--capcut-white); }
+.capcut-timecode .divider { color: var(--capcut-gray-700); }
+.capcut-timecode .total   { color: var(--capcut-gray-500); }
+
+.capcut-play-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.capcut-circle-play-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.capcut-circle-play-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+.icon-offset {
+  margin-left: 2px;
+}
+
+.capcut-history-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.capcut-mini-btn {
+  background: transparent;
+  border: none;
+  color: var(--capcut-gray-300);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+}
+
+.capcut-mini-btn:hover:not(:disabled) {
+  color: #fff;
+  background: var(--capcut-surface-hover);
+}
+
+.capcut-mini-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ===================================================
+   3. CAPCUT TIMELINE SECTION
+   =================================================== */
+.capcut-timeline-section {
+  height: 250px;
+  background: var(--capcut-black);
+  border-top: 1px solid var(--capcut-border);
+  display: flex;
+}
+
+.capcut-timeline-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+/* Left Static Panel (Capa & Mudo) */
+.capcut-left-panel {
+  width: 90px;
+  min-width: 90px;
+  background: var(--capcut-black);
+  border-right: 1px solid var(--capcut-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 26px; /* align with tracks */
+  gap: 12px;
+  z-index: 20;
+}
+
+.capcut-cover-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.cover-thumb {
+  width: 52px;
+  height: 52px;
+  background: #18181b;
+  border: 1px solid var(--capcut-border-light);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--capcut-gray-300);
+}
+
+.cover-label {
+  font-size: 0.65rem;
+  color: var(--capcut-gray-300);
+  font-weight: 600;
+}
+
+.capcut-mute-box {
+  background: #18181b;
+  border: 1px solid var(--capcut-border);
+  border-radius: 6px;
+  width: 76px;
+  padding: 6px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  color: var(--capcut-gray-300);
+}
+
+.capcut-mute-box.muted {
+  color: var(--capcut-cyan);
+  border-color: var(--capcut-cyan);
+}
+
+.mute-label {
+  font-size: 0.55rem;
+  text-align: center;
+  line-height: 1.1;
+}
+
+/* Scrollable Tracks Area */
+.capcut-timeline-scrollable {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: relative;
+  background: var(--capcut-black);
+}
+
+.capcut-tracks-board {
+  position: relative;
+  height: 100%;
+}
+
+/* Ruler */
+.capcut-ruler {
+  height: 24px;
+  position: relative;
+  border-bottom: 1px solid var(--capcut-border);
+  cursor: pointer;
+}
+
+.capcut-tick {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.tick-notch {
+  width: 1px;
+  height: 6px;
+  background-color: var(--capcut-gray-700);
+}
+
+.tick-num {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--capcut-gray-500);
+  margin-left: 2px;
+}
+
+/* SIGNATURE CENTER WHITE PLAYHEAD */
+.capcut-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 35;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.capcut-playhead-handle {
+  width: 12px;
+  height: 10px;
+  background: #ffffff;
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  margin: 0 auto;
+}
+
+.capcut-playhead-line {
+  width: 2px;
+  height: 100%;
+  background: #ffffff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+  margin: 0 auto;
+}
+
+/* Tracks */
+.capcut-track {
+  position: relative;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(34, 34, 40, 0.4);
+}
+
+.capcut-track-video {
+  height: 70px;
+}
+
+/* CAPCUT VIDEO CLIP (WITH SIGNATURE WHITE BORDER & DOUBLE-DOT PILL HANDLES) */
+.capcut-clip-video {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  border-radius: 6px;
+  background: #181a24;
+  border: 1px solid #2e344a;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  overflow: visible;
+}
+
+.capcut-clip-video.selected {
+  border: 3px solid #ffffff !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  z-index: 10;
+}
+
+/* The iconic double-dot pill handles of CapCut */
+.capcut-trim-handle {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 12px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: ew-resize;
+  z-index: 20;
+}
+
+.handle-left {
+  left: -12px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.handle-right {
+  right: -12px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.handle-pill-dot {
+  width: 3px;
+  height: 8px;
+  background: #000000;
+  border-radius: 2px;
+}
+
+.video-clip-content {
+  flex: 1;
+  padding: 0 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.clip-name-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.pro-tag {
+  background: var(--capcut-gold);
+  color: #000;
+  font-size: 0.55rem;
+  font-weight: 900;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.clip-time-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--capcut-gray-300);
+}
+
+/* Plus (+) Button at the end of video track */
+.capcut-add-clip-btn {
+  position: absolute;
+  right: -50px;
+  width: 38px;
+  height: 58px;
+  background: #18181b;
+  border: 1px solid var(--capcut-border);
+  border-radius: 6px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.capcut-add-clip-btn:hover {
+  background: #27272a;
+}
+
+/* Text and Audio Clips in Timeline */
+.capcut-clip-text {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  border-radius: 4px;
+  background: rgba(234, 179, 8, 0.2);
+  border: 1px solid #eab308;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  cursor: pointer;
+}
+
+.capcut-clip-text.selected {
+  border: 2px solid #ffffff !important;
+}
+
+.text-clip-inner {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  color: #fef08a;
+}
+
+.capcut-clip-audio {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid #10b981;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  cursor: pointer;
+}
+
+.capcut-clip-audio.selected {
+  border: 2px solid #ffffff !important;
+}
+
+.audio-clip-inner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: #a7f3d0;
+}
+
+.audio-mini-wave {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  height: 10px;
+}
+
+.audio-mini-wave .bar {
+  width: 2px;
+  height: 100%;
+  background: #10b981;
+}
+
+.capcut-add-track-lane-btn {
+  position: absolute;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed var(--capcut-border-light);
+  color: var(--capcut-gray-300);
+  border-radius: 4px;
+  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.capcut-add-track-lane-btn:hover {
+  color: #fff;
+  border-color: #fff;
+}
+
+/* ===================================================
+   4. CAPCUT BOTTOM NAVIGATION BAR
+   =================================================== */
+.capcut-bottom-bar-wrapper {
+  background: var(--capcut-black);
+  border-top: 1px solid var(--capcut-border);
+  height: 72px;
+  overflow: hidden;
+}
+
+.capcut-bottom-bar {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 0.5rem;
+  gap: 2px;
+}
+
+.capcut-bar-item {
+  min-width: 68px;
+  height: 60px;
+  background: transparent;
+  border: none;
+  color: var(--capcut-gray-300);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  border-radius: 8px;
+  position: relative;
+  transition: all 0.15s;
+}
+
+.capcut-bar-item span {
+  font-size: 0.68rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.capcut-bar-item:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.icon-cyan { color: var(--capcut-cyan); }
+.icon-gold { color: var(--capcut-gold); }
+.text-danger { color: #f87171 !important; }
+
+/* PRO Corner Tag on Action Icons */
+.pro-corner-badge {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  background: var(--capcut-gold);
+  color: #000;
+  font-size: 0.55rem;
+  font-weight: 900;
+  padding: 1px 4px;
+  border-radius: 3px;
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+}
+
+.back-btn {
+  border-right: 1px solid var(--capcut-border-light);
+  margin-right: 4px;
+  color: #fff;
+}
+
+/* ===================================================
+   5. CAPCUT PRO MODAL & SHEETS
+   =================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.capcut-pro-modal {
+  background: #141418;
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 92%;
+  max-width: 580px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.15);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.pro-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.pro-header-badge {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.crown-shining {
+  color: var(--capcut-gold);
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+}
+
+.pro-title-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pro-title-line h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #ffffff, #fef08a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.unlocked-badge {
+  background: var(--capcut-gold);
+  color: #000;
+  font-size: 0.65rem;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.pro-subtitle {
+  font-size: 0.75rem;
+  color: var(--capcut-gray-300);
+}
+
+.pro-feature-spotlight {
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #fef08a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.pro-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  flex: 1;
+  padding-right: 4px;
+}
+
+.pro-feature-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1c1c22;
+  border: 1px solid var(--capcut-border);
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.pro-feature-card.active {
+  border-color: rgba(255, 215, 0, 0.5);
+  background: #23222a;
+}
+
+.card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.bg-purple { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+.bg-cyan   { background: linear-gradient(135deg, #0284c7, #06b6d4); }
+.bg-pink   { background: linear-gradient(135deg, #db2777, #f43f5e); }
+.bg-green  { background: linear-gradient(135deg, #059669, #10b981); }
+.bg-blue   { background: linear-gradient(135deg, #1d4ed8, #3b82f6); }
+.bg-amber  { background: linear-gradient(135deg, #b45309, #f59e0b); }
+
+.card-info h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.card-info p {
+  font-size: 0.7rem;
+  color: var(--capcut-gray-500);
+}
+
+.pro-toggle-btn {
+  background: #2e2e38;
+  border: 1px solid var(--capcut-border-light);
+  color: #fff;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pro-toggle-btn.on {
+  background: var(--capcut-gold);
+  color: #000;
+  border-color: var(--capcut-gold);
+}
+
+.pro-action-btn {
+  background: var(--capcut-blue);
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pro-modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--capcut-border);
+}
+
+.pro-status-notice {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--capcut-gray-300);
+}
+
+.capcut-primary-btn {
+  background: var(--capcut-blue);
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* Modals General (Filters, Speed, Text) */
+.modal-content {
+  background: #141418;
+  border: 1px solid var(--capcut-border-light);
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 500px;
+}
+
+.presets-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.preset-chip {
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: #202026;
+  border: 1px solid var(--capcut-border);
+  color: var(--capcut-gray-300);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.preset-chip:hover { color: #fff; }
+
+.sliders-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.slider-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.slider-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--capcut-gray-300);
+}
+
+.slider-val {
+  font-family: var(--font-mono);
+  color: var(--capcut-cyan);
+}
+
+input[type='range'] {
+  accent-color: var(--capcut-cyan);
+  cursor: pointer;
+}
+
+.speed-preset-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.speed-chip {
+  padding: 8px;
+  background: #202026;
+  border: 1px solid var(--capcut-border);
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.speed-chip.active {
+  background: var(--capcut-cyan);
+  color: #000;
+}
+
+.btn-primary {
+  background: var(--capcut-blue);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: #202026;
+  border: 1px solid var(--capcut-border);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.text-edit-input {
+  width: 100%;
+  background: #202026;
+  border: 1px solid var(--capcut-border);
+  border-radius: 8px;
+  padding: 10px;
+  color: #fff;
+  font-size: 0.95rem;
+  outline: none;
+}

@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090a0f" />
+      <stop offset="50%" stop-color="#0f141c" />
+      <stop offset="100%" stop-color="#050608" />
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe259" />
+      <stop offset="100%" stop-color="#ffa751" />
+    </linearGradient>
+    <linearGradient id="clip1Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff0844" />
+      <stop offset="100%" stop-color="#ffb199" />
+    </linearGradient>
+    <linearGradient id="clip2Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0ba360" />
+      <stop offset="100%" stop-color="#3cba92" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.8" />
+    </filter>
+    <filter id="neon" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1200" height="630" fill="url(#bgGrad)" />
+
+  <!-- Ambient Glow Behind Phone -->
+  <circle cx="600" cy="315" r="320" fill="#00f2fe" opacity="0.08" filter="url(#neon)" />
+  <circle cx="850" cy="220" r="220" fill="#ffa751" opacity="0.06" filter="url(#neon)" />
+
+  <!-- Main Mobile Device Mockup Frame (Pitch Black CapCut Mobile) -->
+  <g transform="translate(390, 25)" filter="url(#shadow)">
+    <!-- Phone Bezel -->
+    <rect x="0" y="0" width="420" height="580" rx="40" fill="#050505" stroke="#252830" stroke-width="4"/>
+    
+    <!-- Top Notch / Speaker -->
+    <rect x="150" y="10" width="120" height="18" rx="9" fill="#121316"/>
+    
+    <!-- Screen Header Bar (CapCut 1:1) -->
+    <rect x="16" y="38" width="388" height="42" fill="#000000"/>
+    <!-- Close Icon -->
+    <text x="32" y="65" font-family="sans-serif" font-size="20" fill="#ffffff" font-weight="bold">✕</text>
+    <!-- Project Name -->
+    <text x="65" y="64" font-family="sans-serif" font-size="14" fill="#e0e0e0" font-weight="600">Reels_Viral_01</text>
+    
+    <!-- PRO UNLOCKED BADGE (Gold Pill) -->
+    <rect x="175" y="47" width="130" height="24" rx="12" fill="#241d06" stroke="#eab308" stroke-width="1.2"/>
+    <text x="187" y="63" font-family="sans-serif" font-size="10" fill="#facc15" font-weight="bold">👑 PRO GRÁTIS</text>
+    
+    <!-- Export Button (Blue) -->
+    <rect x="315" y="46" width="75" height="26" rx="13" fill="#2563eb"/>
+    <text x="328" y="63" font-family="sans-serif" font-size="11" fill="#ffffff" font-weight="bold">Exportar</text>
+
+    <!-- 9:16 Video Player Area -->
+    <rect x="95" y="88" width="230" height="240" rx="8" fill="#111317" stroke="#22252c" stroke-width="1"/>
+    <!-- Simulated Video Visual (Neon Waveform & Sunset) -->
+    <rect x="96" y="89" width="228" height="238" rx="7" fill="url(#clip1Grad)" opacity="0.85"/>
+    <circle cx="210" cy="180" r="45" fill="#ffffff" opacity="0.15"/>
+    <!-- Smart Cutout Overlay (Dotted AI Silhouette) -->
+    <path d="M 190 240 Q 210 160 230 240 Z" fill="#00f2fe" opacity="0.4" stroke="#ffffff" stroke-dasharray="3,3" stroke-width="1.5"/>
+    <!-- Subtitle Overlay -->
+    <rect x="125" y="275" width="170" height="24" rx="4" fill="#000000" opacity="0.75"/>
+    <text x="135" y="291" font-family="sans-serif" font-size="11" fill="#facc15" font-weight="bold">⚡ AUTO-CAPTIONS IA</text>
+
+    <!-- Player Sub-Controls Bar -->
+    <text x="35" y="346" font-family="monospace" font-size="11" fill="#888888">00:04 / 00:15</text>
+    <circle cx="210" cy="342" r="14" fill="#1e222b" stroke="#333842" stroke-width="1"/>
+    <!-- Play Triangle -->
+    <polygon points="207,337 215,342 207,347" fill="#ffffff"/>
+    <text x="365" y="346" font-family="sans-serif" font-size="14" fill="#888888">⤢</text>
+
+    <!-- Timeline Container -->
+    <rect x="16" y="365" width="388" height="135" fill="#08090b" rx="6"/>
+    <!-- Timeline Track Header (Capa / Silenciar) -->
+    <rect x="22" y="375" width="48" height="36" rx="4" fill="#181a20" stroke="#2a2e38"/>
+    <text x="32" y="398" font-family="sans-serif" font-size="10" fill="#a0a5b0" font-weight="bold">Capa</text>
+
+    <!-- Clips on Timeline Track -->
+    <!-- Clip 1 (Selected with CapCut thick white border & double-dot handles) -->
+    <g transform="translate(85, 375)">
+      <rect x="0" y="0" width="160" height="36" rx="4" fill="url(#clip1Grad)" stroke="#ffffff" stroke-width="2.5"/>
+      <!-- Left Pill Handle with 2 dots -->
+      <rect x="-7" y="6" width="8" height="24" rx="4" fill="#ffffff"/>
+      <circle cx="-3" cy="14" r="1.2" fill="#000000"/>
+      <circle cx="-3" cy="22" r="1.2" fill="#000000"/>
+      <!-- Right Pill Handle with 2 dots -->
+      <rect x="159" y="6" width="8" height="24" rx="4" fill="#ffffff"/>
+      <circle cx="163" cy="14" r="1.2" fill="#000000"/>
+      <circle cx="163" cy="22" r="1.2" fill="#000000"/>
+      <text x="15" y="23" font-family="sans-serif" font-size="11" fill="#ffffff" font-weight="bold">Clip_01.mp4</text>
+    </g>
+
+    <!-- Clip 2 -->
+    <rect x="255" y="375" width="110" height="36" rx="4" fill="url(#clip2Grad)" opacity="0.8"/>
+    <text x="270" y="398" font-family="sans-serif" font-size="11" fill="#ffffff">Clip_02.mp4</text>
+
+    <!-- Add Media [+] button -->
+    <rect x="375" y="375" width="24" height="36" rx="4" fill="#16181f" stroke="#2c303c"/>
+    <text x="382" y="398" font-family="sans-serif" font-size="16" fill="#888888">+</text>
+
+    <!-- Audio Track -->
+    <rect x="85" y="420" width="280" height="22" rx="4" fill="#0e2a22" stroke="#10b981" stroke-width="0.8"/>
+    <text x="95" y="435" font-family="sans-serif" font-size="10" fill="#34d399">🎵 Beat_Trap_140BPM.mp3 (Isolamento Vocal Ativo)</text>
+
+    <!-- Subtitle Track -->
+    <rect x="85" y="448" width="240" height="18" rx="4" fill="#2d1c08" stroke="#f59e0b" stroke-width="0.8"/>
+    <text x="95" y="461" font-family="sans-serif" font-size="9" fill="#fbbf24">💬 Legenda: "Crie vídeos virais em segundos..."</text>
+
+    <!-- Central White Playhead Needle -->
+    <polygon points="175,360 185,360 180,369" fill="#ffffff"/>
+    <line x1="180" y1="368" x2="180" y2="495" stroke="#ffffff" stroke-width="2"/>
+
+    <!-- Bottom CapCut Navigation Toolbar (Level 1 / 2) -->
+    <rect x="16" y="505" width="388" height="60" fill="#000000"/>
+    <g transform="translate(25, 515)" font-family="sans-serif" font-size="9" fill="#a0a5b0" text-anchor="middle">
+      <text x="20" y="35">Dividir</text>
+      <text x="65" y="35">Velocidade</text>
+      <text x="115" y="35" fill="#facc15">Recorte IA 👑</text>
+      <text x="165" y="35">Volume</text>
+      <text x="215" y="35" fill="#facc15">Voz PRO 👑</text>
+      <text x="265" y="35">Máscara</text>
+      <text x="315" y="35" fill="#facc15">Estabilizar 👑</text>
+      <text x="360" y="35">Excluir</text>
+    </g>
+  </g>
+
+  <!-- Left Side Badges & Pitch Text (FilmCraft Style) -->
+  <g transform="translate(70, 160)">
+    <rect x="0" y="0" width="160" height="28" rx="14" fill="#1e1808" stroke="#eab308" stroke-width="1"/>
+    <text x="15" y="18" font-family="sans-serif" font-size="11" fill="#facc15" font-weight="bold">👑 100% PRO UNLOCKED</text>
+
+    <text x="0" y="70" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="900" font-size="52" fill="#ffffff" letter-spacing="-1.5">
+      Craft<tspan fill="url(#cyanGrad)">Cut</tspan>
+    </text>
+    <text x="0" y="105" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="500" font-size="18" fill="#94a3b8">
+      Reengenharia Aberta do CapCut Mobile
+    </text>
+
+    <g transform="translate(0, 140)" font-family="sans-serif" font-size="14" fill="#cbd5e1">
+      <text x="0" y="0">✦  Design Mobile Idêntico de 1:1</text>
+      <text x="0" y="30">✦  Smart Cutout (Remoção Fundo IA)</text>
+      <text x="0" y="60">✦  Legendas Automáticas por Voz</text>
+      <text x="0" y="90">✦  Isolamento Vocal & Microfone ao Vivo</text>
+      <text x="0" y="120">✦  Optical Flow 60 FPS & 4K Export</text>
+      <text x="0" y="150">✦  Web, Desktop e Android Nativo (Capacitor)</text>
+    </g>
+  </g>
+
+  <!-- Right Side Tech Specs Cards -->
+  <g transform="translate(850, 150)">
+    <rect x="0" y="0" width="280" height="100" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+    <text x="24" y="36" font-family="sans-serif" font-size="12" fill="#8b949e" font-weight="bold">TARGET PLATFORMS</text>
+    <text x="24" y="64" font-family="sans-serif" font-size="17" fill="#ffffff" font-weight="bold">Web (Wasm) & Android</text>
+    <text x="24" y="84" font-family="sans-serif" font-size="12" fill="#38bdf8">TypeScript · React 19 · Capacitor</text>
+
+    <rect x="0" y="120" width="280" height="100" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+    <text x="24" y="156" font-family="sans-serif" font-size="12" fill="#8b949e" font-weight="bold">REVERSE ENGINEERED FROM</text>
+    <text x="24" y="184" font-family="sans-serif" font-size="17" fill="#ffffff" font-weight="bold">CapCut v13.6.0</text>
+    <text x="24" y="204" font-family="sans-serif" font-size="12" fill="#34d399">24 DEXes · 147 Native Libs Analyzed</text>
+
+    <rect x="0" y="240" width="280" height="100" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+    <text x="24" y="276" font-family="sans-serif" font-size="12" fill="#8b949e" font-weight="bold">LICENSE & FREEDOM</text>
+    <text x="24" y="304" font-family="sans-serif" font-size="17" fill="#ffffff" font-weight="bold">MIT Open Source</text>
+    <text x="24" y="324" font-family="sans-serif" font-size="12" fill="#facc15">Zero Paywalls · Zero Watermarks</text>
+  </g>
+</svg>
